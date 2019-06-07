@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Nav from './Nav';
 import Users from './Users';
@@ -13,7 +13,7 @@ const App = () => {
         <Nav />
       </header>
       <Switch>
-        <Route path="/users" exact component={Users} />
+        <Route path="/users" exact render={() => <Redirect to="users/1" />} />
         <Route path="/users/:page" exact component={Users} />
         <Route path="/" component={Home} />
       </Switch>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 import api from './users-api';
+import Table from './Table';
 
 class Users extends Component {
   constructor(props) {
@@ -41,11 +42,15 @@ class Users extends Component {
   render() {
     const { count, users } = this.state;
     const pageNumber = this.props.match.params.page || 1;
-    console.log(pageNumber);
+    const lastPage = Math.ceil(count / 50);
     return (
       <main>
-        <div>{count}</div>
-        <div>{users.length}</div>
+        <p>
+          {count} Results. Page {pageNumber} of {lastPage}.
+        </p>
+        <div>Pager: Todo</div>
+        <div>Search: Todo</div>
+        <Table users={users} />
       </main>
     );
   }
