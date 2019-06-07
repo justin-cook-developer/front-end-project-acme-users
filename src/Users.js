@@ -31,7 +31,6 @@ class Users extends Component {
   fetchData = async url => {
     try {
       const { data } = await api.get(url);
-      console.log(data);
       const { users, count } = data;
       this.setState({ users, count });
     } catch (e) {
@@ -41,6 +40,8 @@ class Users extends Component {
 
   render() {
     const { count, users } = this.state;
+    const pageNumber = this.props.match.params.page || 1;
+    console.log(pageNumber);
     return (
       <main>
         <div>{count}</div>
