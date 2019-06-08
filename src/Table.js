@@ -10,7 +10,7 @@ const TableRow = ({ firstName, lastName, middleName, email, title }) => (
   </tr>
 );
 
-const Title = ({ users }) => (
+const Table = ({ users }) => (
   <table>
     <thead>
       <tr>
@@ -29,4 +29,4 @@ const Title = ({ users }) => (
   </table>
 );
 
-export default Title;
+export default Table;

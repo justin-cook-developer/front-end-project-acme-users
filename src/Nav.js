@@ -6,6 +6,12 @@ const activeStyles = {
   color: 'green',
 };
 
+const numbers = {};
+
+for (let i = 1; i < 10; i++) {
+  numbers[i] = true;
+}
+
 const Nav = () => (
   <nav>
     <ul>
@@ -15,7 +21,15 @@ const Nav = () => (
         </NavLink>
       </li>
       <li>
-        <NavLink to="/users" activeStyle={activeStyles}>
+        <NavLink
+          to="/users/1"
+          isActive={(_, { pathname }) => {
+            if (pathname.startsWith('/users/')) {
+              return numbers[pathname[7]];
+            }
+          }}
+          activeStyle={activeStyles}
+        >
           Users
         </NavLink>
       </li>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import api from './users-api';
 import Table from './Table';
+import Pager from './Pager';
 
 class Users extends Component {
   constructor(props) {
@@ -25,30 +26,41 @@ class Users extends Component {
 
   getAdditionalUrl = () => {
     const { page } = this.props.match.params;
-    const additionalUrl = page ? `/${page}` : '';
-    return additionalUrl;
+    if (page === '1' || page === undefined) {
+      return '';
+    } else {
+      return `/${page - 1}`;
+    }
   };
 
   fetchData = async url => {
     try {
       const { data } = await api.get(url);
       const { users, count } = data;
+      const lastPage = Math.ceil(count / 50);
+      const page = this.props.match.params.page;
+      if (page > lastPage) {
+        this.props.history.push(`/users/${lastPage}`);
+        return;
+      }
       this.setState({ users, count });
     } catch (e) {
       console.error(e);
     }
   };
 
+  getPageNumber = () => parseInt(this.props.match.params.page, 10) || 1;
+
   render() {
     const { count, users } = this.state;
-    const pageNumber = this.props.match.params.page || 1;
+    const pageNumber = this.getPageNumber();
     const lastPage = Math.ceil(count / 50);
     return (
       <main>
         <p>
           {count} Results. Page {pageNumber} of {lastPage}.
         </p>
-        <div>Pager: Todo</div>
+        <Pager pageNumber={pageNumber} lastPage={lastPage} />
         <div>Search: Todo</div>
         <Table users={users} />
       </main>

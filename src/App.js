@@ -14,7 +14,18 @@ const App = () => {
       </header>
       <Switch>
         <Route path="/users" exact render={() => <Redirect to="users/1" />} />
-        <Route path="/users/:page" exact component={Users} />
+        <Route
+          path="/users/:page"
+          exact
+          render={({ match }) => {
+            const page = parseInt(match.params.page, 10);
+            if (page < 1) {
+              return <Redirect to="/users/1" />;
+            } else {
+              return <Users />;
+            }
+          }}
+        />
         <Route path="/" component={Home} />
       </Switch>
     </Fragment>
