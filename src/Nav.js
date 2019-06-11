@@ -24,6 +24,7 @@ const Nav = () => (
         <NavLink
           to="/users/1"
           isActive={(_, { pathname }) => {
+            console.log(_, pathname);
             if (pathname.startsWith('/users/')) {
               return numbers[pathname[7]];
             }
